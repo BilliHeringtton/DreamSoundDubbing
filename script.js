@@ -602,4 +602,22 @@ authPage.classList.remove('hidden');
 [homePage, mediaPage, profilePage, adminPage].forEach(p => p.classList.add('hidden'));
 
 console.log('🚀 Dream Sound Dubbing запущен!');
-console.log('📧 В админ-панели можно назначать администраторов по email');
+console.log('📧 В админ-панели можно назначать администраторов по email');// ===== УПРАВЛЕНИЕ АДМИНИСТРАТОРАМИ =====
+// Документ в Firestore, где хранятся email администраторов
+const ADMINS_DOC = 'admins';
+const ADMINS_COLLECTION = 'config';
+
+// Получить список администраторов
+async function getAdminsList() {
+    try {
+        const docRef = doc(db, ADMINS_COLLECTION, ADMINS_DOC);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data().emails || [];
+        }
+        return [];
+    } catch (error) {
+        console.error('Ошибка получения списка администраторов:', error);
+        return [];
+    }
+}
