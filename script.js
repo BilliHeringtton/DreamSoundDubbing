@@ -38,9 +38,11 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // ===== УПРАВЛЕНИЕ АДМИНИСТРАТОРАМИ =====
-// Документ в Firestore, где хранятся email администраторов
 const ADMINS_DOC = 'admins';
 const ADMINS_COLLECTION = 'config';
+
+// ⭐ ПЕРВЫЙ АДМИНИСТРАТОР (автоматически добавится при запуске)
+const FIRST_ADMIN_EMAIL = 'Maks2010karp@gmail.com';
 
 // Получить список администраторов
 async function getAdminsList() {
@@ -54,6 +56,35 @@ async function getAdminsList() {
     } catch (error) {
         console.error('Ошибка получения списка администраторов:', error);
         return [];
+    }
+}
+
+// ⭐ АВТОМАТИЧЕСКОЕ ДОБАВЛЕНИЕ ПЕРВОГО АДМИНИСТРАТОРА
+async function initializeFirstAdmin() {
+    try {
+        const docRef = doc(db, ADMINS_COLLECTION, ADMINS_DOC);
+        const docSnap = await getDoc(docRef);
+        
+        if (!docSnap.exists()) {
+            // Документа нет - создаём с первым админом
+            await setDoc(docRef, {
+                emails: [FIRST_ADMIN_EMAIL]
+            });
+            console.log(`✅ Администратор ${FIRST_ADMIN_EMAIL} добавлен в базу!`);
+        } else {
+            const admins = docSnap.data().emails || [];
+            if (!admins.includes(FIRST_ADMIN_EMAIL)) {
+                // Добавляем админа, если его ещё нет
+                await updateDoc(docRef, {
+                    emails: arrayUnion(FIRST_ADMIN_EMAIL)
+                });
+                console.log(`✅ Администратор ${FIRST_ADMIN_EMAIL} добавлен в список!`);
+            } else {
+                console.log(`ℹ️ Администратор ${FIRST_ADMIN_EMAIL} уже есть в списке`);
+            }
+        }
+    } catch (error) {
+        console.error('❌ Ошибка инициализации администратора:', error);
     }
 }
 
@@ -330,10 +361,11 @@ function renderAdmins(admins, currentUserEmail) {
         const item = document.createElement('div');
         item.className = 'admin-item';
         const isCurrentUser = email === currentUserEmail;
+        const isFirstAdmin = email === FIRST_ADMIN_EMAIL;
         item.innerHTML = `
             <div class="admin-item-info">
-                <span>${email}</span>
-                <span class="admin-item-sub">${isCurrentUser ? '👑 Это вы' : ''}</span>
+                <span>${email} ${isFirstAdmin ? '⭐' : ''}</span>
+                <span class="admin-item-sub">${isCurrentUser ? '👑 Это вы' : ''} ${isFirstAdmin && !isCurrentUser ? '🔒 Первый администратор' : ''}</span>
             </div>
             <div class="admin-item-actions">
                 ${!isCurrentUser ? `<button class="btn small-btn delete-btn" data-email="${email}">🗑️ Удалить</button>` : ''}
@@ -405,7 +437,6 @@ addAdminBtn.addEventListener('click', async () => {
         return;
     }
 
-    // Проверяем, что email валидный
     if (!email.includes('@') || !email.includes('.')) {
         alert('Пожалуйста, введите корректный email!');
         return;
@@ -557,6 +588,10 @@ async function deleteMember(id) {
 addProjectBtn.addEventListener('click', addProject);
 addMemberBtn.addEventListener('click', addMember);
 
+// ===== ЗАПУСК ИНИЦИАЛИЗАЦИИ =====
+// Запускаем автоматическое добавление первого администратора
+initializeFirstAdmin();
+
 // ===== ОТСЛЕЖИВАНИЕ СОСТОЯНИЯ АВТОРИЗАЦИИ =====
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -567,7 +602,6 @@ onAuthStateChanged(auth, async (user) => {
         
         if (isAdmin) {
             adminMenuSection.classList.remove('hidden');
-            // Загружаем список администраторов
             await loadAdmins();
         } else {
             adminMenuSection.classList.add('hidden');
@@ -602,22 +636,5 @@ authPage.classList.remove('hidden');
 [homePage, mediaPage, profilePage, adminPage].forEach(p => p.classList.add('hidden'));
 
 console.log('🚀 Dream Sound Dubbing запущен!');
-console.log('📧 В админ-панели можно назначать администраторов по email');// ===== УПРАВЛЕНИЕ АДМИНИСТРАТОРАМИ =====
-// Документ в Firestore, где хранятся email администраторов
-const ADMINS_DOC = 'admins';
-const ADMINS_COLLECTION = 'config';
-
-// Получить список администраторов
-async function getAdminsList() {
-    try {
-        const docRef = doc(db, ADMINS_COLLECTION, ADMINS_DOC);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            return docSnap.data().emails || [];
-        }
-        return [];
-    } catch (error) {
-        console.error('Ошибка получения списка администраторов:', error);
-        return [];
-    }
-}
+console.log('⭐ Первый администратор: Maks2010karp@gmail.com');
+console.log('📧 В админ-панели можно назначать других администраторов');
