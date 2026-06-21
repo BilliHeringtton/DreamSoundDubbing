@@ -7,31 +7,7 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Затемнение для меню -->
-    <div id="overlay" class="overlay hidden"></div>
-
-    <!-- Выезжающее меню -->
-    <nav id="sideMenu" class="side-menu">
-        <button id="closeMenuBtn" class="close-menu-btn">✕</button>
-        
-        <h2 class="menu-title">Навигация</h2>
-        <button class="menu-btn" data-page="home">🏠 Главная</button>
-        <button class="menu-btn" data-page="media">🎬 Медиа</button>
-        
-        <h2 class="menu-title mt-8">Аккаунт</h2>
-        <button class="menu-btn" data-page="profile">👤 Профиль</button>
-
-        <!-- Админ-панель (скрыта по умолчанию) -->
-        <div id="adminMenuSection" class="hidden">
-            <h2 class="menu-title mt-8">🔧 Администрирование</h2>
-            <button class="menu-btn" data-page="admin">⚙️ Управление контентом</button>
-        </div>
-
-        <!-- Кнопка выхода -->
-        <button id="logoutBtn" class="menu-btn logout-btn hidden">🚪 Выйти</button>
-    </nav>
-
-    <!-- Хедер -->
+    <!-- ===== ХЕДЕР ===== -->
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
@@ -51,54 +27,87 @@
         </div>
     </header>
 
-    <!-- Основной контент -->
-    <main id="mainContent">
-        <!-- ===== СТРАНИЦА АВТОРИЗАЦИИ ===== -->
-        <div id="authPage" class="page">
-            <div class="auth-card">
-                <h2 class="auth-title">Добро пожаловать!</h2>
-                <p class="auth-subtitle">Войдите или зарегистрируйтесь</p>
-                
-                <input type="email" id="emailInput" placeholder="Email" />
-                <input type="password" id="passwordInput" placeholder="Пароль" />
-                
-                <div id="errorMessage" class="error-text"></div>
-                
-                <button id="loginBtn" class="btn primary-btn">Войти</button>
-                <button id="registerBtn" class="btn secondary-btn">Зарегистрироваться</button>
-            </div>
+    <!-- ===== ВЫЕЗЖАЮЩЕЕ МЕНЮ ===== -->
+    <div id="overlay" class="overlay hidden"></div>
+    <nav id="sideMenu" class="side-menu">
+        <button id="closeMenuBtn" class="close-menu-btn">✕</button>
+        
+        <div class="menu-user-info" id="menuUserInfo">
+            <img id="menuAvatar" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=64" alt="Avatar" />
+            <span id="menuUserEmail">Гость</span>
         </div>
 
-        <!-- ===== СТРАНИЦА "ГЛАВНАЯ" ===== -->
-        <div id="homePage" class="page hidden">
-            <div class="page-content">
+        <div class="menu-divider"></div>
+        
+        <h2 class="menu-title">Навигация</h2>
+        <button class="menu-btn" data-page="home">🏠 Главная</button>
+        <button class="menu-btn" data-page="media">🎬 Медиа</button>
+        
+        <h2 class="menu-title mt-8">Аккаунт</h2>
+        <button class="menu-btn" data-page="profile">👤 Профиль</button>
+
+        <div id="adminMenuSection" class="hidden">
+            <h2 class="menu-title mt-8">🔧 Администрирование</h2>
+            <button class="menu-btn" data-page="admin">⚙️ Управление контентом</button>
+        </div>
+
+        <div class="menu-divider"></div>
+        <button id="logoutBtn" class="menu-btn logout-btn hidden">🚪 Выйти</button>
+    </nav>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <main id="mainContent">
+        <!-- СТРАНИЦА: Авторизация -->
+        <section id="authPage" class="page active">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2 class="auth-title">Добро пожаловать!</h2>
+                    <p class="auth-subtitle">Войдите или зарегистрируйтесь</p>
+                </div>
+                
+                <div class="auth-body">
+                    <input type="email" id="emailInput" placeholder="Email" />
+                    <input type="password" id="passwordInput" placeholder="Пароль" />
+                    <div id="errorMessage" class="error-text"></div>
+                    <button id="loginBtn" class="btn primary-btn">Войти</button>
+                    <button id="registerBtn" class="btn secondary-btn">Зарегистрироваться</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- СТРАНИЦА: Главная -->
+        <section id="homePage" class="page hidden">
+            <div class="page-hero">
                 <h1 class="page-title">Наша команда</h1>
                 <p class="page-subtitle">Профессионалы в мире озвучивания и звукового дизайна</p>
-                
+            </div>
+            <div class="page-content">
                 <div id="teamContainer" class="team-grid">
-                    <!-- Команда загружается из Firebase -->
+                    <!-- Загружается из Firebase -->
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ===== СТРАНИЦА "МЕДИА" ===== -->
-        <div id="mediaPage" class="page hidden">
-            <div class="page-content">
+        <!-- СТРАНИЦА: Медиа -->
+        <section id="mediaPage" class="page hidden">
+            <div class="page-hero">
                 <h1 class="page-title">Наши проекты</h1>
                 <p class="page-subtitle">Работы, которыми мы гордимся</p>
-                
+            </div>
+            <div class="page-content">
                 <div id="projectsContainer" class="projects-grid">
-                    <!-- Проекты загружаются из Firebase -->
+                    <!-- Загружается из Firebase -->
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ===== СТРАНИЦА "ПРОФИЛЬ" ===== -->
-        <div id="profilePage" class="page hidden">
-            <div class="page-content profile-container">
+        <!-- СТРАНИЦА: Профиль -->
+        <section id="profilePage" class="page hidden">
+            <div class="page-hero">
                 <h1 class="page-title">Настройки профиля</h1>
                 <p class="page-subtitle">Измените свои данные</p>
-                
+            </div>
+            <div class="page-content profile-container">
                 <div class="profile-card">
                     <div class="avatar-container">
                         <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=128" alt="Profile" />
@@ -121,30 +130,26 @@
                     </div>
                     
                     <div id="profileMessage" class="profile-message"></div>
-                    
                     <button id="saveProfileBtn" class="btn primary-btn">💾 Сохранить изменения</button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ===== СТРАНИЦА "АДМИН-ПАНЕЛЬ" ===== -->
-        <div id="adminPage" class="page hidden">
-            <div class="page-content">
+        <!-- СТРАНИЦА: Админ-панель -->
+        <section id="adminPage" class="page hidden">
+            <div class="page-hero">
                 <h1 class="page-title">🔧 Админ-панель</h1>
                 <p class="page-subtitle">Управление контентом сайта</p>
-
+            </div>
+            <div class="page-content">
                 <!-- Управление администраторами -->
                 <div class="admin-section">
                     <h2 class="admin-section-title">👑 Управление администраторами</h2>
-                    
                     <div class="admin-form">
                         <input type="email" id="adminEmailInput" placeholder="Email нового администратора" />
                         <button id="addAdminBtn" class="btn primary-btn">➕ Добавить администратора</button>
                     </div>
-
-                    <div id="adminsList" class="admin-list">
-                        <!-- Список администраторов -->
-                    </div>
+                    <div id="adminsList" class="admin-list"></div>
                 </div>
 
                 <hr class="admin-divider" />
@@ -152,7 +157,6 @@
                 <!-- Управление проектами -->
                 <div class="admin-section">
                     <h2 class="admin-section-title">🎬 Управление проектами</h2>
-                    
                     <div class="admin-form">
                         <input type="text" id="projectTitle" placeholder="Название проекта" />
                         <input type="text" id="projectType" placeholder="Тип (например: Полный дубляж)" />
@@ -160,10 +164,7 @@
                         <input type="text" id="projectIcon" placeholder="Эмодзи (например: 🎬)" />
                         <button id="addProjectBtn" class="btn primary-btn">➕ Добавить проект</button>
                     </div>
-
-                    <div id="projectsAdminList" class="admin-list">
-                        <!-- Список проектов для администрирования -->
-                    </div>
+                    <div id="projectsAdminList" class="admin-list"></div>
                 </div>
 
                 <hr class="admin-divider" />
@@ -171,23 +172,19 @@
                 <!-- Управление командой -->
                 <div class="admin-section">
                     <h2 class="admin-section-title">👥 Управление командой</h2>
-                    
                     <div class="admin-form">
                         <input type="text" id="memberName" placeholder="Имя участника" />
                         <input type="text" id="memberRole" placeholder="Роль (например: Звукорежиссёр)" />
                         <input type="text" id="memberEmoji" placeholder="Эмодзи (например: 🎧)" />
                         <button id="addMemberBtn" class="btn primary-btn">➕ Добавить участника</button>
                     </div>
-
-                    <div id="membersAdminList" class="admin-list">
-                        <!-- Список участников для администрирования -->
-                    </div>
+                    <div id="membersAdminList" class="admin-list"></div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
-    <!-- Анимированный фон (GIF) -->
+    <!-- ===== АНИМИРОВАННЫЙ ФОН ===== -->
     <div id="animatedBackground" class="animated-bg"></div>
 
     <script type="module" src="script.js"></script>

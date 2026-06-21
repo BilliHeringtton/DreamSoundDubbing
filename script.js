@@ -189,8 +189,14 @@ const menuBtns = document.querySelectorAll('.menu-btn[data-page]');
 
 // ===== ФУНКЦИИ НАВИГАЦИИ =====
 function showPage(pageId) {
-    // Скрываем ВСЕ страницы
-    [authPage, homePage, mediaPage, profilePage, adminPage].forEach(p => p.classList.add('hidden'));
+    // Скрываем все страницы
+    const pages = [authPage, homePage, mediaPage, profilePage, adminPage];
+    pages.forEach(p => {
+        if (p) {
+            p.classList.remove('active');
+            p.classList.add('hidden');
+        }
+    });
     
     // Показываем нужную
     const pageMap = {
@@ -200,19 +206,11 @@ function showPage(pageId) {
         'admin': adminPage
     };
     
-    if (pageMap[pageId]) {
-        pageMap[pageId].classList.remove('hidden');
+    const targetPage = pageMap[pageId];
+    if (targetPage) {
+        targetPage.classList.remove('hidden');
+        targetPage.classList.add('active');
     }
-}
-
-function closeMenu() {
-    sideMenu.classList.remove('open');
-    overlay.classList.add('hidden');
-}
-
-function openMenu() {
-    sideMenu.classList.add('open');
-    overlay.classList.remove('hidden');
 }
 
 // ===== СОБЫТИЯ МЕНЮ =====
