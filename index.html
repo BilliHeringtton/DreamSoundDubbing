@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dream Sound Dubbing</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Затемнение для меню -->
+    <div id="overlay" class="overlay hidden"></div>
+
+    <!-- Выезжающее меню -->
+    <nav id="sideMenu" class="side-menu">
+        <button id="closeMenuBtn" class="close-menu-btn">✕</button>
+        
+        <h2 class="menu-title">Навигация</h2>
+        <button class="menu-btn" data-page="home">🏠 Главная</button>
+        <button class="menu-btn" data-page="media">🎬 Медиа</button>
+        
+        <h2 class="menu-title mt-8">Аккаунт</h2>
+        <button class="menu-btn" data-page="profile">👤 Профиль</button>
+
+        <!-- Админ-панель (видна только администратору) -->
+        <div id="adminMenuSection" class="hidden">
+            <h2 class="menu-title mt-8">🔧 Администрирование</h2>
+            <button class="menu-btn" data-page="admin">⚙️ Управление контентом</button>
+        </div>
+
+        <!-- Кнопка выхода -->
+        <button id="logoutBtn" class="menu-btn logout-btn hidden">🚪 Выйти</button>
+    </nav>
+
+    <!-- Хедер -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <button id="menuToggle" class="burger-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <img src="logo.png" alt="Dream Sound Dubbing" class="logo" 
+                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2248%22 height=%2248%22%3E%3Crect width=%2248%22 height=%2248%22 fill=%227c3aed%22 rx=%2224%22/%3E%3Ctext x=%2224%22 y=%2232%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2220%22 font-weight=%22bold%22%3EDSD%3C/text%3E%3C/svg%3E'" />
+                <h1 class="brand-title">
+                    <span class="dream">Dream</span>
+                    <span class="sound">Sound</span>
+                    <span class="dubbing">Dubbing</span>
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main id="mainContent">
+        <!-- Страница авторизации -->
+        <div id="authPage" class="page">
+            <div class="auth-card">
+                <h2 class="auth-title">Добро пожаловать!</h2>
+                <p class="auth-subtitle">Войдите или зарегистрируйтесь</p>
+                
+                <input type="email" id="emailInput" placeholder="Email" />
+                <input type="password" id="passwordInput" placeholder="Пароль" />
+                
+                <div id="errorMessage" class="error-text"></div>
+                
+                <button id="loginBtn" class="btn primary-btn">Войти</button>
+                <button id="registerBtn" class="btn secondary-btn">Зарегистрироваться</button>
+            </div>
+        </div>
+
+        <!-- Страница "Главная" -->
+        <div id="homePage" class="page hidden">
+            <div class="page-content">
+                <h1 class="page-title">Наша команда</h1>
+                <p class="page-subtitle">Профессионалы в мире озвучивания и звукового дизайна</p>
+                
+                <div id="teamContainer" class="team-grid">
+                    <!-- Команда будет загружаться из Firebase -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница "Медиа" -->
+        <div id="mediaPage" class="page hidden">
+            <div class="page-content">
+                <h1 class="page-title">Наши проекты</h1>
+                <p class="page-subtitle">Работы, которыми мы гордимся</p>
+                
+                <div id="projectsContainer" class="projects-grid">
+                    <!-- Проекты будут загружаться из Firebase -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница "Профиль" -->
+        <div id="profilePage" class="page hidden">
+            <div class="page-content profile-container">
+                <h1 class="page-title">Настройки профиля</h1>
+                <p class="page-subtitle">Измените свои данные</p>
+                
+                <div class="profile-card">
+                    <div class="avatar-container">
+                        <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=128" alt="Profile" />
+                        <div class="avatar-edit-badge">✏️</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <label>Имя</label>
+                        <input type="text" id="profileName" placeholder="Введите ваше имя" />
+                    </div>
+                    
+                    <div class="profile-field">
+                        <label>URL фото профиля</label>
+                        <input type="text" id="profilePhotoURL" placeholder="https://example.com/avatar.jpg" />
+                    </div>
+                    
+                    <div class="profile-field">
+                        <label>Email</label>
+                        <input type="email" id="profileEmail" disabled />
+                    </div>
+                    
+                    <div id="profileMessage" class="profile-message"></div>
+                    
+                    <button id="saveProfileBtn" class="btn primary-btn">💾 Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Страница "Админ-панель" -->
+        <div id="adminPage" class="page hidden">
+            <div class="page-content">
+                <h1 class="page-title">🔧 Админ-панель</h1>
+                <p class="page-subtitle">Управление контентом сайта</p>
+
+                <!-- Управление администраторами -->
+                <div class="admin-section">
+                    <h2 class="admin-section-title">👑 Управление администраторами</h2>
+                    
+                    <div class="admin-form">
+                        <input type="email" id="adminEmailInput" placeholder="Email нового администратора" />
+                        <button id="addAdminBtn" class="btn primary-btn">➕ Добавить администратора</button>
+                    </div>
+
+                    <div id="adminsList" class="admin-list">
+                        <!-- Список администраторов -->
+                    </div>
+                </div>
+
+                <hr class="admin-divider" />
+
+                <!-- Управление проектами -->
+                <div class="admin-section">
+                    <h2 class="admin-section-title">🎬 Управление проектами</h2>
+                    
+                    <div class="admin-form">
+                        <input type="text" id="projectTitle" placeholder="Название проекта" />
+                        <input type="text" id="projectType" placeholder="Тип (например: Полный дубляж)" />
+                        <input type="text" id="projectYear" placeholder="Год (например: 2024)" />
+                        <input type="text" id="projectIcon" placeholder="Эмодзи (например: 🎬)" />
+                        <button id="addProjectBtn" class="btn primary-btn">➕ Добавить проект</button>
+                    </div>
+
+                    <div id="projectsAdminList" class="admin-list">
+                        <!-- Список проектов для администрирования -->
+                    </div>
+                </div>
+
+                <hr class="admin-divider" />
+
+                <!-- Управление командой -->
+                <div class="admin-section">
+                    <h2 class="admin-section-title">👥 Управление командой</h2>
+                    
+                    <div class="admin-form">
+                        <input type="text" id="memberName" placeholder="Имя участника" />
+                        <input type="text" id="memberRole" placeholder="Роль (например: Звукорежиссёр)" />
+                        <input type="text" id="memberEmoji" placeholder="Эмодзи (например: 🎧)" />
+                        <button id="addMemberBtn" class="btn primary-btn">➕ Добавить участника</button>
+                    </div>
+
+                    <div id="membersAdminList" class="admin-list">
+                        <!-- Список участников для администрирования -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Анимированный фон (GIF) -->
+    <div id="animatedBackground" class="animated-bg"></div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

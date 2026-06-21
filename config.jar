@@ -1,0 +1,17 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDdSMty86vdN5xxz_KNQOqRbPXz-Im65Kw",
+  authDomain: "dream-sound-dubbung.firebaseapp.com",
+  projectId: "dream-sound-dubbung",
+  storageBucket: "dream-sound-dubbung.firebasestorage.app",
+  messagingSenderId: "485510639860",
+  appId: "1:485510639860:web:ff49a533c91bd6a91e6ea1"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
