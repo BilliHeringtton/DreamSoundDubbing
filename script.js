@@ -189,8 +189,10 @@ const menuBtns = document.querySelectorAll('.menu-btn[data-page]');
 
 // ===== ФУНКЦИИ НАВИГАЦИИ =====
 function showPage(pageId) {
+    // Скрываем ВСЕ страницы
     [authPage, homePage, mediaPage, profilePage, adminPage].forEach(p => p.classList.add('hidden'));
     
+    // Показываем нужную
     const pageMap = {
         'home': homePage,
         'media': mediaPage,

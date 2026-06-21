@@ -21,7 +21,7 @@
         <h2 class="menu-title mt-8">Аккаунт</h2>
         <button class="menu-btn" data-page="profile">👤 Профиль</button>
 
-        <!-- Админ-панель (видна только администратору) -->
+        <!-- Админ-панель (скрыта по умолчанию) -->
         <div id="adminMenuSection" class="hidden">
             <h2 class="menu-title mt-8">🔧 Администрирование</h2>
             <button class="menu-btn" data-page="admin">⚙️ Управление контентом</button>
@@ -53,7 +53,7 @@
 
     <!-- Основной контент -->
     <main id="mainContent">
-        <!-- Страница авторизации -->
+        <!-- ===== СТРАНИЦА АВТОРИЗАЦИИ ===== -->
         <div id="authPage" class="page">
             <div class="auth-card">
                 <h2 class="auth-title">Добро пожаловать!</h2>
@@ -69,31 +69,31 @@
             </div>
         </div>
 
-        <!-- Страница "Главная" -->
+        <!-- ===== СТРАНИЦА "ГЛАВНАЯ" ===== -->
         <div id="homePage" class="page hidden">
             <div class="page-content">
                 <h1 class="page-title">Наша команда</h1>
                 <p class="page-subtitle">Профессионалы в мире озвучивания и звукового дизайна</p>
                 
                 <div id="teamContainer" class="team-grid">
-                    <!-- Команда будет загружаться из Firebase -->
+                    <!-- Команда загружается из Firebase -->
                 </div>
             </div>
         </div>
 
-        <!-- Страница "Медиа" -->
+        <!-- ===== СТРАНИЦА "МЕДИА" ===== -->
         <div id="mediaPage" class="page hidden">
             <div class="page-content">
                 <h1 class="page-title">Наши проекты</h1>
                 <p class="page-subtitle">Работы, которыми мы гордимся</p>
                 
                 <div id="projectsContainer" class="projects-grid">
-                    <!-- Проекты будут загружаться из Firebase -->
+                    <!-- Проекты загружаются из Firebase -->
                 </div>
             </div>
         </div>
 
-        <!-- Страница "Профиль" -->
+        <!-- ===== СТРАНИЦА "ПРОФИЛЬ" ===== -->
         <div id="profilePage" class="page hidden">
             <div class="page-content profile-container">
                 <h1 class="page-title">Настройки профиля</h1>
@@ -127,7 +127,7 @@
             </div>
         </div>
 
-        <!-- Страница "Админ-панель" -->
+        <!-- ===== СТРАНИЦА "АДМИН-ПАНЕЛЬ" ===== -->
         <div id="adminPage" class="page hidden">
             <div class="page-content">
                 <h1 class="page-title">🔧 Админ-панель</h1>
